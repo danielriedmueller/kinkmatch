@@ -3,36 +3,25 @@ import React, {Component} from "react";
 import {Login} from "../components/login";
 import {Logout} from "../components/logout";
 import withSession from "../lib/session";
-import {Questionlist} from "../components/questionlist";
+import Link from "next/link";
+import {getChoices, login, logout} from "../lib/db";
 
 class Home extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            questions: props.questions,
             user: props.user,
             loginFailed: false,
         };
 
-        this.login = this.login.bind(this);
         this.loginSuccessful = this.loginSuccessful.bind(this);
         this.loginFailed = this.loginFailed.bind(this);
-        this.logout = this.logout.bind(this);
         this.logoutSuccessful = this.logoutSuccessful.bind(this);
     }
 
-    async login(username, password) {
-        return fetch(process.env.NEXT_PUBLIC_API_LOGIN, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({username, password})
-        });
-    }
-
     async loginSuccessful(id) {
-        const response = await fetch(process.env.NEXT_PUBLIC_API_CHOICES);
-        const choices = await response.json();
+        const choices = getChoices(id);
 
         this.setState({
             user: {id, choices},
@@ -47,12 +36,6 @@ class Home extends Component {
         });
     }
 
-    async logout() {
-        return fetch(process.env.NEXT_PUBLIC_API_LOGOUT, {
-            method: "POST"
-        });
-    }
-
     logoutSuccessful() {
         this.setState({
             user: null,
@@ -63,12 +46,31 @@ class Home extends Component {
     render() {
         return <div id="app" className={style.container}>
             {this.state.user
-                ? <Logout logout={this.logout} logoutSuccessful={this.logoutSuccessful}/>
-                : <Login login={this.login} loginSuccesful={this.loginSuccessful} loginFailed={this.loginFailed}/>
+                ? <Logout logoutSuccessful={this.logoutSuccessful}/>
+                : <Login loginSuccesful={this.loginSuccessful} loginFailed={this.loginFailed}/>
             }
-
             {this.state.loginFailed ? "Benutzername oder Passwort falsch." : ""}
-            <Questionlist questions={this.state.questions} />
+
+            {this.state.user
+                ? <ul>
+                    <li>
+                        <Link href="/questions">
+                            <a>Zu den Fragen</a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/matches">
+                            <a>Mit wem soll gematched werden?</a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/matches">
+                            <a>Matches ansehen!</a>
+                        </Link>
+                    </li>
+                </ul>
+                : null
+            }
         </div>
     }
 }
@@ -80,19 +82,8 @@ export const getServerSideProps = withSession(async function ({ req, res }) {
         user = null;
     }
 
-    if (user) {
-        const response = await fetch(process.env.NEXT_PUBLIC_API_CHOICES);
-        user.choices = await response.json();
-    }
-
-    const response = await fetch(process.env.NEXT_PUBLIC_API_QUESTIONS);
-    const questions = await response.json();
-
     return {
-        props: {
-            questions,
-            user
-        }
+        props: {user}
     };
 });
 

@@ -6,6 +6,9 @@ export default withSession(async (req, res) => {
 
     let row = db.prepare('SELECT * FROM user WHERE username = ?').get(username);
 
+    console.log(req.body)
+    console.log(row)
+
     if (row && password === row.password) {
         const id = row.id;
 

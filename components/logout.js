@@ -1,12 +1,13 @@
 import React from "react";
 import style from '../styles/Logout.module.scss';
+import {logout} from "../lib/db";
 
 export function Logout(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await props.logout();
+        const response = await logout();
 
         if (response.ok) {
             props.logoutSuccessful()

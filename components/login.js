@@ -1,5 +1,6 @@
 import React, {useRef} from "react";
 import style from '../styles/Login.module.scss';
+import {login} from "../lib/db";
 
 export function Login(props) {
     const usernameInput = useRef();
@@ -10,7 +11,7 @@ export function Login(props) {
 
         const username = usernameInput.current.value;
         const password = passwordInput.current.value;
-        const response = await props.login(username, password);
+        const response = await login(username, password);
 
         if (response.ok) {
             const userId = await response.json();
