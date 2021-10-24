@@ -33,7 +33,7 @@ export function Login(props) {
             </label>
         </div>
         <div>
-            <button type="submit">Sign in</button>
+            <button type="submit">Login oder Registrieren</button>
         </div>
     </form>
 

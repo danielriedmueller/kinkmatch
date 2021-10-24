@@ -12,7 +12,6 @@ const cors = initMiddleware(
 )
 
 export default async function handle(req, res) {
-    // Run cors
     await cors(req, res);
 
     let questions = db.prepare('SELECT * FROM question').all();

@@ -2,16 +2,16 @@ import style from '../../styles/Home.module.scss';
 import React, {Component} from "react";
 import withSession from "../../lib/session";
 import Link from "next/link";
-import {getChoices, getQuestions} from "../../lib/db";
+import {getChoices, getMatches, getQuestions} from "../../lib/db";
+import {SelectableUser} from "../../components/users/selectableUser";
 
 class Matches extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            questions: props.questions,
-            user: props.user
-        };
+        this.state = {...props};
+
+        console.log(props.matches)
     }
 
     render() {
@@ -27,7 +27,15 @@ class Matches extends Component {
             <Link href="/">
                 <a>Zurück</a>
             </Link>
-            MATCHES
+            <div>
+                {this.state.matches.map(({id, username}) => <SelectableUser
+                    key={id}
+                    userId={id}
+                    username={username}
+                    isAllowed={true}
+                    hasGivenPermission={true}
+                />)}
+            </div>
         </div>
     }
 }
@@ -44,11 +52,13 @@ export const getServerSideProps = withSession(async function ({ req, res }) {
     }
 
     const questions = await getQuestions();
+    const matches = await getMatches(user.id);
 
     return {
         props: {
             questions,
-            user
+            user,
+            matches
         }
     };
 });

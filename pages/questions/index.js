@@ -19,11 +19,24 @@ class Questions extends Component {
     }
 
     async setChoice(questionId, choice) {
-        await setChoice(questionId, this.state.user.id, choice);
+        const choices = await setChoice(questionId, this.state.user.id, choice);
+        let user = this.state.user;
+        user.choices = choices;
+        this.setState(user);
     }
 
-    findUserChoice() {
-        console.log(this.state.user)
+    findUserChoice(questionId) {
+        let choice = this.state.user.choices.filter(({question_id, user_id, choice}) => questionId === question_id);
+
+        if (choice === undefined) {
+            choice = null;
+        }
+
+        if (choice && Array.isArray(choice) && choice.length === 1) {
+            return choice[0].choice
+        }
+
+        return null;
     }
 
     render() {
@@ -41,6 +54,7 @@ class Questions extends Component {
             </Link>
             {this.state.questions.map(({id, text}) => <Question
                 key={id}
+                questionId={id}
                 text={text}
                 setChoice={this.setChoice}
                 choice={this.findUserChoice(id)} />

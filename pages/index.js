@@ -46,10 +46,14 @@ class Home extends Component {
     render() {
         return <div id="app" className={style.container}>
             {this.state.user
+                ? "Hallo " + this.state.user.username
+                : ""
+            }
+            {this.state.user
                 ? <Logout logoutSuccessful={this.logoutSuccessful}/>
                 : <Login loginSuccesful={this.loginSuccessful} loginFailed={this.loginFailed}/>
             }
-            {this.state.loginFailed ? "Benutzername oder Passwort falsch." : ""}
+            {this.state.loginFailed ? "Benutzername oder Passwort falsch oder Benutzer existiert bereits." : ""}
 
             {this.state.user
                 ? <ul>
@@ -59,7 +63,7 @@ class Home extends Component {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/matches">
+                        <Link href="/social">
                             <a>Mit wem soll gematched werden?</a>
                         </Link>
                     </li>
