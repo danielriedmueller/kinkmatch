@@ -15,34 +15,23 @@ const cors = initMiddleware(
 export default withSession(async (req, res) => {
     await cors(req, res);
 
-    const {username, password} = req.body;
+    const {username} = req.body;
 
     let row = db.prepare('SELECT * FROM user WHERE username = ?').get(username);
 
-    if (row) {
-        if (password === row.password) {
-            const id = row.id;
-
-            req.session.set("user", {id, username});
-            await req.session.save();
-
-            return res.status(201).json({id, username});
-        }
-    } else {
-        // Create Account
+    // Create Account
+    if (!row) {
         db
-            .prepare('INSERT INTO user (username, password) VALUES (?, ?)')
-            .run(username, password);
+            .prepare('INSERT INTO user (username) VALUES (?)')
+            .run(username);
 
-        let row = db.prepare('SELECT * FROM user WHERE username = ?').get(username);
-
-        const id = row.id;
-
-        req.session.set("user", {id, username});
-        await req.session.save();
-
-        return res.status(201).json({id, username});
+        row = db.prepare('SELECT * FROM user WHERE username = ?').get(username);
     }
 
-    return res.status(403).send("");
+    const id = row.id;
+
+    req.session.set("user", {id, username});
+    await req.session.save();
+
+    return res.status(201).json({id, username});
 });

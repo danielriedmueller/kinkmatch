@@ -1,12 +1,24 @@
 .userselection {
-
-
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
 }
 
 .selectableuser {
   border: 1px solid grey;
-  padding: 30px;
+  padding: var(--spacing-s);
+  margin: var(--spacing-s);
+
+  &.isAllowed {
+    background-color: var(--pink);
+  }
+
+  &.hasGivenPermission {
+    background-color: var(--tuerkis-dark);
+  }
+
+  &.hasGivenPermission.isAllowed {
+    background-image: linear-gradient(90deg, var(--pink), var(--tuerkis-dark));
+  }
 }

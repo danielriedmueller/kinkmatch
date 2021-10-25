@@ -4,14 +4,12 @@ import {login} from "../lib/db";
 
 export function Login(props) {
     const usernameInput = useRef();
-    const passwordInput = useRef();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const username = usernameInput.current.value;
-        const password = passwordInput.current.value;
-        const response = await login(username, password);
+        const response = await login(username);
 
         if (response.ok) {
             const {userId, username} = await response.json();
@@ -28,12 +26,7 @@ export function Login(props) {
             </label>
         </div>
         <div>
-            <label>
-                Passwort: <input type="password" ref={passwordInput}/>
-            </label>
-        </div>
-        <div>
-            <button type="submit">Login oder Registrieren</button>
+            <button type="submit">Go!</button>
         </div>
     </form>
 

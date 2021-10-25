@@ -45,8 +45,10 @@ class Social extends Component {
             <Link href="/">
                 <a>Zurück</a>
             </Link>
+            <Link href="/matches">
+                <a>Weiter</a>
+            </Link>
             <div className={style.userselection}>
-                <div>{this.state.user.username}</div>
                 <div>
                     {this.state.permissions.map(({id, username, isAllowed, hasGivenPermission}) => <SelectableUser
                         key={id}

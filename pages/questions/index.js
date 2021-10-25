@@ -1,9 +1,10 @@
-import style from '../../styles/Home.module.scss';
+import styleHome from '../../styles/Home.module.scss';
+import style from '../../styles/Question.module.scss';
 import React, {Component} from "react";
 import withSession from "../../lib/session";
 import Link from "next/link";
 import {Question} from "../../components/questions/question";
-import {getChoices, getQuestions, setChoice} from "../../lib/db";
+import {getChoices, getQuestions, resetChoices, setChoice} from "../../lib/db";
 
 class Questions extends Component {
     constructor(props) {
@@ -15,13 +16,21 @@ class Questions extends Component {
         };
 
         this.setChoice = this.setChoice.bind(this);
-        this.setChoice = this.setChoice.bind(this);
+        this.resetChoices = this.resetChoices.bind(this);
     }
 
     async setChoice(questionId, choice) {
         const choices = await setChoice(questionId, this.state.user.id, choice);
         let user = this.state.user;
         user.choices = choices;
+        this.setState(user);
+    }
+
+
+    async resetChoices() {
+        let user = this.state.user;
+        await resetChoices(user.id);
+        user.choices = [];
         this.setState(user);
     }
 
@@ -48,17 +57,26 @@ class Questions extends Component {
             </div>
         }
 
-        return <div id="app" className={style.container}>
+        return <div id="app" className={styleHome.container}>
             <Link href="/">
                 <a>Zurück</a>
             </Link>
-            {this.state.questions.map(({id, text}) => <Question
-                key={id}
-                questionId={id}
-                text={text}
-                setChoice={this.setChoice}
-                choice={this.findUserChoice(id)} />
-            )}
+            <button onClick={this.resetChoices}>Reset</button>
+            {this.state.user.choices.length === this.state.questions.length
+                ? <Link href="/social">
+                    <a>Weiter</a>
+                </Link>
+                : null
+            }
+            <div>{this.state.user.choices.length} von {this.state.questions.length} Fragen beantwortet</div>
+            <div className={style.questions}>
+                {this.state.questions.map((question) => <Question
+                    key={question.id}
+                    question={question}
+                    setChoice={this.setChoice}
+                    choice={this.findUserChoice(question.id)} />
+                )}
+            </div>
         </div>
     }
 }
@@ -74,7 +92,8 @@ export const getServerSideProps = withSession(async function ({ req, res }) {
         user.choices = await getChoices(user.id);
     }
 
-    const questions = await getQuestions();
+    let questions = await getQuestions();
+    questions = questions.reverse();
 
     return {
         props: {

@@ -2,15 +2,9 @@ import React from "react";
 import style from '../../styles/Social.module.scss';
 
 export function SelectableUser(props) {
-    return <div className={style.selectableuser}>
-        {props.username}
-        {props.isAllowed
-            ? <button onClick={() => props.disallowMatching(props.userId)} >Verbieten</button>
-            : <button onClick={() => props.allowMatching(props.userId)} >Erlauben</button>
-        }
-        {props.hasGivenPermission
-            ? "+"
-            : "-"
-        }
-    </div>
+    console.log(props)
+    return <div
+        className={`${style.selectableuser} ${props.isAllowed ? style.isAllowed : ''} ${props.hasGivenPermission ? style.hasGivenPermission : ''}`}
+        onClick={() => props.isAllowed ? props.disallowMatching(props.userId) : props.allowMatching(props.userId)}
+    >{props.username}</div>
 }

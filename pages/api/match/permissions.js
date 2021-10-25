@@ -31,8 +31,6 @@ export async function fetchPermissions(id) {
         )
         .all(id, id, id);
 
-    console.log(permissions)
-
     return permissions.map(({id, username, isAllowed, hasGivenPermission}) => ({
         id,
         username,
