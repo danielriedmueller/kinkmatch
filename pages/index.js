@@ -5,6 +5,7 @@ import {Logout} from "../components/logout";
 import withSession from "../lib/session";
 import Link from "next/link";
 import {getChoices, login, logout} from "../lib/db";
+import {Header} from "../components/header";
 
 class Home extends Component {
     constructor(props) {
@@ -45,12 +46,9 @@ class Home extends Component {
 
     render() {
         return <div id="app" className={style.container}>
+            <Header user={this.state.user} logoutSuccessful={this.logoutSuccessful} />
             {this.state.user
-                ? "Hallo " + this.state.user.username
-                : ""
-            }
-            {this.state.user
-                ? <Logout logoutSuccessful={this.logoutSuccessful}/>
+                ? null
                 : <Login loginSuccesful={this.loginSuccessful} loginFailed={this.loginFailed}/>
             }
             {this.state.loginFailed ? "Benutzername oder Passwort falsch oder Benutzer existiert bereits." : ""}
