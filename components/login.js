@@ -14,8 +14,8 @@ export function Login(props) {
         const response = await login(username, password);
 
         if (response.ok) {
-            const userId = await response.json();
-            props.loginSuccesful(userId)
+            const {userId, username} = await response.json();
+            props.loginSuccesful(userId, username)
         } else {
             props.loginFailed();
         }

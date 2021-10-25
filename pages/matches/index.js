@@ -26,12 +26,13 @@ class Matches extends Component {
                 <a>Zurück</a>
             </Link>
             <div>
-                {this.state.matches.map(({id, username, choices}) => <SelectableUser
+                {this.state.matches.map(({id, username, choices, questionsAnswered}) => <SelectableUser
                     key={id}
                     userId={id}
                     username={username}
                     choices={choices}
                     questions={this.state.questions}
+                    questionsAnswered={questionsAnswered}
                 />)}
             </div>
         </div>

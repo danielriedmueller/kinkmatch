@@ -7,7 +7,7 @@ export function Question(props) {
         <div>
             <fieldset>
                 <label>
-                    Ja
+                    Nein
                     <input
                         type={'radio'}
                         name={'choiceinput' + props.questionId}
@@ -16,7 +16,7 @@ export function Question(props) {
                     />
                 </label>
                 <label>
-                    Nein
+                    Ja
                     <input
                         type={'radio'}
                         name={'choiceinput' + props.questionId}

@@ -20,11 +20,11 @@ class Home extends Component {
         this.logoutSuccessful = this.logoutSuccessful.bind(this);
     }
 
-    async loginSuccessful(id) {
+    async loginSuccessful(id, username) {
         const choices = getChoices(id);
 
         this.setState({
-            user: {id, choices},
+            user: {id, username, choices},
             loginFailed: false,
         });
     }

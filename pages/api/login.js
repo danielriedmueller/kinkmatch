@@ -26,7 +26,7 @@ export default withSession(async (req, res) => {
             req.session.set("user", {id, username});
             await req.session.save();
 
-            return res.status(201).json(id);
+            return res.status(201).json({id, username});
         }
     } else {
         // Create Account
@@ -41,7 +41,7 @@ export default withSession(async (req, res) => {
         req.session.set("user", {id, username});
         await req.session.save();
 
-        return res.status(201).json(id);
+        return res.status(201).json({id, username});
     }
 
     return res.status(403).send("");

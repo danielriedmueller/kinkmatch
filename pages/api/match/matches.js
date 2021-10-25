@@ -33,34 +33,37 @@ export async function fetchMatches(id) {
 
     const positiveChoicesFromSelf = db.prepare('SELECT question_id, choice FROM choice WHERE choice <> 0 AND user_id = ?').all(id);
 
-    let positiveChoicesFromOthers = {};
+    let choicesFromOthers = {};
     matches.forEach(({id}) => {
-        positiveChoicesFromOthers[id] = db.prepare('SELECT question_id, choice FROM choice WHERE choice <> 0 AND user_id = ?').all(id);
+        choicesFromOthers[id] = db.prepare('SELECT question_id, choice FROM choice WHERE user_id = ?').all(id);
     })
 
     matches = matches.map(({id, username}) => ({
         id,
         username,
-        choices: calcMatches(id, positiveChoicesFromSelf, positiveChoicesFromOthers)
+        choices: calcMatches(id, positiveChoicesFromSelf, choicesFromOthers),
+        questionsAnswered: choicesFromOthers[id].length
     }));
 
     return matches.filter(({id, username, choices}) => choices.length !== 0);
 }
 
-function calcMatches(userId, positiveChoicesFromSelf, positiveChoicesFromOthers) {
+function calcMatches(userId, positiveChoicesFromSelf, choicesFromOthers) {
     let matches = [];
 
-    positiveChoicesFromOthers[userId].forEach(({question_id, choice}) => {
-        const ownChoice = positiveChoicesFromSelf.find(x => x.question_id = question_id);
+    positiveChoicesFromSelf.forEach(({question_id, choice}) => {
+        const choiceFromOther = choicesFromOthers[userId].find(x => x.question_id === question_id);
 
-        if (ownChoice) {
+        if (choiceFromOther && isChoicePositive(choiceFromOther.choice)) {
             matches.push({
                 questionId: question_id,
-                ownChoice: ownChoice.choice,
-                otherChoice: choice
+                ownChoice: choice,
+                otherChoice: choiceFromOther.choice
             })
         }
     })
 
     return matches;
 }
+
+const isChoicePositive = (choice) => choice !== 0;
