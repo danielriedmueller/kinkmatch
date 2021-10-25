@@ -3,15 +3,13 @@ import React, {Component} from "react";
 import withSession from "../../lib/session";
 import Link from "next/link";
 import {getChoices, getMatches, getQuestions} from "../../lib/db";
-import {SelectableUser} from "../../components/users/selectableUser";
+import {SelectableUser} from "../../components/matches/selectableUser";
 
 class Matches extends Component {
     constructor(props) {
         super(props);
 
         this.state = {...props};
-
-        console.log(props.matches)
     }
 
     render() {
@@ -28,12 +26,12 @@ class Matches extends Component {
                 <a>Zurück</a>
             </Link>
             <div>
-                {this.state.matches.map(({id, username}) => <SelectableUser
+                {this.state.matches.map(({id, username, choices}) => <SelectableUser
                     key={id}
                     userId={id}
                     username={username}
-                    isAllowed={true}
-                    hasGivenPermission={true}
+                    choices={choices}
+                    questions={this.state.questions}
                 />)}
             </div>
         </div>
