@@ -15,9 +15,7 @@ export function Logout(props) {
     };
 
     return <form onSubmit={handleSubmit} className={style.logout}>
-        <div>
-            <button type="submit">Logout</button>
-        </div>
+        <button type="submit">Logout</button>
     </form>
 
 }

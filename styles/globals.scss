@@ -9,12 +9,14 @@
   --blau: #4361EE;
   --tuerkis-dark: #4895EF;
   --tuerkis: #4CC9F0;
-  --spacing: 23px;
-  --spacing-s: 10px;
+  --spacing: 20px;
+  --spacing-s: 15px;
   --icon-size: 20px;
   --icon-size-big: 40px;
-  --font-size-body: 16px;
+  --font-size-body: 20px;
   --font-size-header: 24px;
+  --border-radius: 8px;
+  --font-family: 'Indie Flower', cursive;
 }
 
 html, body {
@@ -22,8 +24,8 @@ html, body {
   width: 100%;
   padding: 0;
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
+  font-size: var(--font-size-body);
+  font-family: var(--font-family);
   color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -36,6 +38,34 @@ html, body {
 
 #app {
   height: 100%;
+}
+
+button, a {
+  border: none;
+  background-color: var(--tuerkis);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-body);
+  font-family: var(--font-family);
+  margin: 8px 12px 8px 0;
+  padding: 5px 8px 3px 8px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #fff;
+}
+
+a:visited {
+  color: #fff;
+}
+
+table {
+  width: 100%;
+
+  td, th {
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    text-align: left;
+    padding: 8px;
+  }
 }
 
 #app > * {

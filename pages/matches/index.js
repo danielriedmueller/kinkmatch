@@ -22,7 +22,7 @@ class Matches extends Component {
         }
 
         return <div id="app" className={style.container}>
-            <Link href="/">
+            <Link href="/social">
                 <a>Zurück</a>
             </Link>
             <div>

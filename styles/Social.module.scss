@@ -6,19 +6,25 @@
 }
 
 .selectableuser {
-  border: 1px solid grey;
   padding: var(--spacing-s);
-  margin: var(--spacing-s);
+  background-color: var(--pink-dark);
+  border-radius: var(--border-radius);
+  margin-top: var(--spacing);
+  position: relative;
 
-  &.isAllowed {
-    background-color: var(--pink);
+  &.isAllowed::before,  &.hasGivenPermission::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    right: var(--spacing);
+    display: block;
+    background: transparent url("../assets/icons/thumbs-up.svg") no-repeat center center;
+    background-size: 35px;
+    width: 35px;
+    height: 35px;
   }
 
-  &.hasGivenPermission {
-    background-color: var(--tuerkis-dark);
-  }
-
-  &.hasGivenPermission.isAllowed {
-    background-image: linear-gradient(90deg, var(--pink), var(--tuerkis-dark));
+  &.hasGivenPermission.isAllowed::before {
+    right: calc(3 * var(--spacing));
   }
 }

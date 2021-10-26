@@ -1,0 +1,21 @@
+{
+  "name": "Kinkmatch",
+  "short_name": "Kinkmatch",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#560BAD",
+  "theme_color": "#560BAD",
+  "icons": [
+    {
+      "src": "android-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "android-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

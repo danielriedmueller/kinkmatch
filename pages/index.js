@@ -1,11 +1,9 @@
 import style from '../styles/Home.module.scss';
 import React, {Component} from "react";
-import {Login} from "../components/login";
-import {Logout} from "../components/logout";
 import withSession from "../lib/session";
 import Link from "next/link";
-import {getChoices, login, logout} from "../lib/db";
 import {Header} from "../components/header";
+import Head from 'next/head'
 
 class Home extends Component {
     constructor(props) {
@@ -22,10 +20,8 @@ class Home extends Component {
     }
 
     async loginSuccessful(id, username) {
-        const choices = getChoices(id);
-
         this.setState({
-            user: {id, username, choices},
+            user: {id, username},
             loginFailed: false,
         });
     }
@@ -40,19 +36,19 @@ class Home extends Component {
     logoutSuccessful() {
         this.setState({
             user: null,
-            choices: []
+            loginFailed: false
         });
     }
 
     render() {
         return <div id="app" className={style.container}>
-            <Header user={this.state.user} logoutSuccessful={this.logoutSuccessful} />
-            {this.state.user
-                ? null
-                : <Login loginSuccesful={this.loginSuccessful} loginFailed={this.loginFailed}/>
-            }
+            <Header
+                user={this.state.user}
+                logoutSuccessful={this.logoutSuccessful}
+                loginSuccessful={this.loginSuccessful}
+                loginFailed={this.loginFailed}
+            />
             {this.state.loginFailed ? "Benutzername oder Passwort falsch oder Benutzer existiert bereits." : ""}
-
             {this.state.user
                 ? <ul>
                     <li>

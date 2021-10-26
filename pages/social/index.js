@@ -5,6 +5,7 @@ import withSession from "../../lib/session";
 import Link from "next/link";
 import {allowMatchWith, disallowMatchWith, getMatchPermissions} from "../../lib/db";
 import {SelectableUser} from "../../components/users/selectableUser";
+import {useInterval} from "../../lib/useInterval";
 
 class Social extends Component {
     constructor(props) {
@@ -32,6 +33,19 @@ class Social extends Component {
         });
     }
 
+    async componentDidMount() {
+        this.intervalId = setInterval(async() => {
+            const permissions = await getMatchPermissions(this.state.user.id);
+            this.setState({
+                permissions: permissions
+            });
+        }, 250);
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.intervalId);
+    }
+
     render() {
         if (!this.state.user) {
             return <div id="app" className={homeStyle.container}>
@@ -42,7 +56,7 @@ class Social extends Component {
         }
 
         return <div id="app" className={homeStyle.container}>
-            <Link href="/">
+            <Link href="/questions">
                 <a>Zurück</a>
             </Link>
             <Link href="/matches">

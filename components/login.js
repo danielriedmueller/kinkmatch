@@ -13,7 +13,7 @@ export function Login(props) {
 
         if (response.ok) {
             const {userId, username} = await response.json();
-            props.loginSuccesful(userId, username)
+            props.loginSuccessful(userId, username)
         } else {
             props.loginFailed();
         }
@@ -22,12 +22,8 @@ export function Login(props) {
     return <form onSubmit={handleSubmit} className={style.login}>
         <div>
             <label>
-                Benutzername: <input type="text" ref={usernameInput}/>
+                <input type="text" placeholder={'Benutzername'} ref={usernameInput}/><button type="submit">Go!</button>
             </label>
         </div>
-        <div>
-            <button type="submit">Go!</button>
-        </div>
     </form>
-
 }

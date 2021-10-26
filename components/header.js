@@ -4,15 +4,10 @@ import {Logout} from "./logout";
 import {Login} from "./login";
 
 export function Header(props) {
-
     return <div className={style.header}>
         {props.user
-            ? "Hallo " + props.user.username
-            : ""
-        }
-        {props.user
-            ? <Logout logoutSuccessful={props.logoutSuccessful}/>
-            : null
+            ? <div><Logout logoutSuccessful={props.logoutSuccessful}/>Hallo {props.user.username}! </div>
+            : <Login loginSuccessful={props.loginSuccessful} loginFailed={props.loginFailed} />
         }
     </div>
 
