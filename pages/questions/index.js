@@ -61,14 +61,10 @@ class Questions extends Component {
             <Link href="/">
                 <a>Zurück</a>
             </Link>
-            <button onClick={this.resetChoices}>Reset</button>
-            {this.state.user.choices.length === this.state.questions.length
-                ? <Link href="/social">
-                    <a>Weiter</a>
-                </Link>
-                : null
-            }
-            <div>{this.state.user.choices.length} von {this.state.questions.length} Fragen beantwortet</div>
+            <Link href="/social">
+                <a>Weiter</a>
+            </Link>
+            <div>{this.state.user.choices.length} von {this.state.questions.length} Fragen beantwortet <button onClick={this.resetChoices}>Reset</button></div>
             <div className={style.questions}>
                 {this.state.questions.map((question) => <Question
                     key={question.id}

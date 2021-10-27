@@ -6,7 +6,7 @@ import {Login} from "./login";
 export function Header(props) {
     return <div className={style.header}>
         {props.user
-            ? <div><Logout logoutSuccessful={props.logoutSuccessful}/>Hallo {props.user.username}! </div>
+            ? <div>Hallo {props.user.username}! </div>
             : <Login loginSuccessful={props.loginSuccessful} loginFailed={props.loginFailed} />
         }
     </div>

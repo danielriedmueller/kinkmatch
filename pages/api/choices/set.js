@@ -14,9 +14,12 @@ export default async function handle(req, res) {
     let choices = db.prepare('SELECT * FROM choice WHERE user_id = ?').all(userId);
 
     // Remove all permissions on choice change
+    /*
     db
         .prepare('DELETE FROM match_permission WHERE allow_match_with = ?')
         .run(userId);
+
+     */
 
     res.json(choices);
 }

@@ -13,6 +13,7 @@
   --spacing-s: 15px;
   --icon-size: 20px;
   --icon-size-big: 40px;
+  --font-size-small: 16px;
   --font-size-body: 20px;
   --font-size-header: 24px;
   --border-radius: 8px;
@@ -36,7 +37,7 @@ html, body {
   box-sizing: border-box;
 }
 
-#app {
+body > div, body > div > div {
   height: 100%;
 }
 

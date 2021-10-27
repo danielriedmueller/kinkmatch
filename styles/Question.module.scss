@@ -1,8 +1,8 @@
 .questions {
   position: relative;
   padding: var(--spacing-s);
-  height: 670px;
   margin-top: var(--spacing);
+  height: 550px;
 
   .question {
     position: absolute;
@@ -17,6 +17,11 @@
 
     h1 {
       margin: 0;
+    }
+
+    p {
+      font-family: "Noto Sans Carian";
+      font-size: var(--font-size-small);
     }
 
     &.answered {

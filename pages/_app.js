@@ -1,9 +1,10 @@
 import '../styles/globals.scss'
+import style from '../styles/Home.module.scss';
 import Head from "next/head";
 import React from "react";
 
 function MyApp({ Component, pageProps }) {
-  return <div>
+  return <div className={style.outerContainer}>
     <Head>
       <title>Kinkmatch</title>
       <meta name='viewport' content='initial-scale=1, viewport-fit=cover' />

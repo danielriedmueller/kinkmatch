@@ -1,5 +1,5 @@
 .container {
-  padding: var(--spacing);
+  width: 100%;
 
   ul {
     list-style: none;
@@ -19,4 +19,11 @@
       }
     }
   }
+}
+
+.outerContainer {
+  display: flex;
+  padding: var(--spacing);
+  align-items: center;
+  justify-content: center;
 }
